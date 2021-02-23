@@ -8,7 +8,6 @@ class Photos extends Migration
 {
     public function up()
     {
-        echo "photos migration \n";
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
@@ -22,7 +21,7 @@ class Photos extends Migration
             ]
         ]);
 
-        $this->forge->addKey('id', true);
+        $this->forge->addPrimaryKey('id');
         $this->forge->createTable('photos', TRUE);
 
     }
