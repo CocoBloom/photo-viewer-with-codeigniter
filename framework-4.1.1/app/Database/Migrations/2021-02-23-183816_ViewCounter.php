@@ -21,15 +21,13 @@ class ViewCounter extends Migration
         ]);
 
         $this->forge->addForeignKey('photo_id', 'photos', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('view_counters', TRUE);
+        $this->forge->createTable('view_counters');
 
         $this->db->enableForeignKeyChecks();
-
     }
 
 	public function down()
 	{
-        $this->forge->dropTable('view_counters');
-
+        $this->forge->dropTable('view_counters', false, true);
     }
 }
