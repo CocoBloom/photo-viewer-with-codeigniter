@@ -52,7 +52,7 @@
 #--------------------------------------------------------------------
 
 # database.default.hostname = localhost
-# database.default.database = ci4
+# database.default.database = photo_viewer
 # database.default.username = root
 # database.default.password = root
 # database.default.DBDriver = MySQLi
