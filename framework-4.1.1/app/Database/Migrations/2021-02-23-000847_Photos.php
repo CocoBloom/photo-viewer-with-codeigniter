@@ -22,7 +22,7 @@ class Photos extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('photos', TRUE);
+        $this->forge->createTable('photos');
 
     }
 
