@@ -2,16 +2,11 @@
 
 namespace App\Controllers;
 
-use Config\Database;
+use CodeIgniter\HTTP\Request;
+use function PHPUnit\Framework\returnArgument;
 
 class Photo extends BaseController
 {
-    protected $db_connection;
-
-    public function __construct()
-    {
-        $this->db_connection = Database::connect();
-    }
 
     public function index()
 	{
@@ -19,8 +14,23 @@ class Photo extends BaseController
         $builder->select(['id', 'caption', 'photo_credit', 'view_counter']);
         $builder->join('view_counters', 'photos.id = view_counters.photo_id');
         $query = $builder->get();
-        return $query->getResultArray();
+        if (!empty($query->getResult())) {
+            return ($this->response->setBody($query->getResultArray()));
+        } else {
+            return $this->response->setBody("No photos in the database");
+
+        }
 	}
 
+	public function show($id)
+    {
+        $builder = $this->db_connection->table("photos");
+        $query = $builder->getWhere(['id' => $id]);
+        if (!empty($query->getResult())) {
+            return $this->response->setBody($query->getResultArray());
+        } else {
+            return $this->response->setBody("Photo with this id doesn't exist.");
+        }
+    }
 
 }
