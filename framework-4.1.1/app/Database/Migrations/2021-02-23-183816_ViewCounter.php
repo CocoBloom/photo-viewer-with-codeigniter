@@ -12,7 +12,8 @@ class ViewCounter extends Migration
 
         $this->forge->addField([
             'photo_id' => [
-                'type'           => 'INT'
+                'type'           => 'INT',
+                'unique'         => true
             ],
             'view_counter' => [
                 'type'           => 'INT',
@@ -28,6 +29,6 @@ class ViewCounter extends Migration
 
 	public function down()
 	{
-        $this->forge->dropTable('view_counters', false, true);
+        $this->forge->dropTable('view_counters', true);
     }
 }
