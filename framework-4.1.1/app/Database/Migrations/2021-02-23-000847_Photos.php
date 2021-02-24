@@ -28,6 +28,6 @@ class Photos extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('photos');
+        $this->forge->dropTable('photos', true);
     }
 }
