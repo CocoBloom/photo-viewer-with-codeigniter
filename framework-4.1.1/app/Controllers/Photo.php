@@ -2,22 +2,21 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\HTTP\Request;
 
 class Photo extends BaseController
 {
-    protected $tableName = '';
-    protected $viewerTableName;
+    protected $photosTable = '';
+    protected $counterTable;
 
     public function __construct()
     {
-        $this->tableName = 'photos';
-        $this->viewerTableName = 'view_counters';
+        $this->photosTable = 'photos';
+        $this->counterTable = 'view_counters';
     }
 
     public function index()
 	{
-        $builder = $this->db_connection->table($this->tableName);
+        $builder = $this->db_connection->table($this->photosTable);
         $builder->select(['id', 'caption', 'photo_credit', 'view_counter']);
         $builder->join('view_counters', 'photos.id = view_counters.photo_id');
         $query = $builder->get();
@@ -30,7 +29,7 @@ class Photo extends BaseController
 
 	public function show($id)
     {
-        $builder = $this->db_connection->table($this->tableName);
+        $builder = $this->db_connection->table($this->photosTable);
         $query = $builder->getWhere(['id' => $id]);
         if (!empty($query->getResult())) {
             return $this->response->setBody(["data" => $query->getResultArray()]);
@@ -41,7 +40,7 @@ class Photo extends BaseController
 
     public function delete($id)
     {
-        $builder = $this->db_connection->table($this->tableName);
+        $builder = $this->db_connection->table($this->photosTable);
         $builder->where('id', intval($id));
         $builder->delete();
         if (1 === $this->db_connection->affectedRows()) {
@@ -54,7 +53,7 @@ class Photo extends BaseController
     public function create()
     {
         $data = $this->request->getPost();
-        $builder = $this->db_connection->table($this->tableName);
+        $builder = $this->db_connection->table($this->photosTable);
         $builder->insert($data);
         if ($this->db_connection->affectedRows() === 1 && $this->createPhotoViewerRow($this->db_connection->mysqli->insert_id)) {
             return $this->response->setBody(["data" => true]);
@@ -69,8 +68,10 @@ class Photo extends BaseController
             "photo_id" => $id,
             "view_counter" => 0
         ];
-        $builder = $this->db_connection->table($this->viewerTableName);
+        $builder = $this->db_connection->table($this->counterTable);
         $builder->insert($data);
         return $this->db_connection->affectedRows() === 1;
     }
+
+
 }
