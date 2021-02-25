@@ -6,7 +6,7 @@ namespace App\Controllers;
 class Photo extends BaseController
 {
     protected $photosTable = '';
-    protected $counterTable;
+    protected $counterTable = '';
 
     public function __construct()
     {
@@ -70,7 +70,39 @@ class Photo extends BaseController
         ];
         $builder = $this->db_connection->table($this->counterTable);
         $builder->insert($data);
+        var_dump($this->db_connection->affectedRows() === 1);
         return $this->db_connection->affectedRows() === 1;
+    }
+
+    public function update($photo_id)
+    {
+        $counterByPhoto = $this->getCounterByPhotoID($photo_id);
+        if ($counterByPhoto !== -1) {
+            $data = [
+                'view_counter' => $counterByPhoto + 1
+            ];
+            $builder = $this->db_connection->table($this->counterTable);
+            $builder->where('photo_id', $photo_id);
+            $builder->update($data);
+            if ($this->db_connection->affectedRows() === 1) {
+                var_dump($this->response->setBody(["data" => true]));
+            } else {
+                var_dump($this->response->setBody(["data" => false]));
+            }
+        } else {
+            return $this->response->setBody(["data" => false]);
+        }
+    }
+
+    protected function getCounterByPhotoID($photo_id)
+    {
+        $builder = $this->db_connection->table($this->counterTable);
+        $query = $builder->getWhere(['photo_id' => $photo_id]);
+        if (!empty($query->getResult())) {
+            return $query->getResultArray()[0]['view_counter'];
+        } else {
+            return -1;
+        }
     }
 
 
