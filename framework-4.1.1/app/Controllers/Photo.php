@@ -104,6 +104,4 @@ class Photo extends BaseController
             return -1;
         }
     }
-
-
 }
