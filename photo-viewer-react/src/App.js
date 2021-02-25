@@ -7,7 +7,6 @@ const App = () => {
         <Router>
             <div className="App">
               <Route exact path="/" component={MainPage}></Route>
-      
             </div>
         </Router>
   );

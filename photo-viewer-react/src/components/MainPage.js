@@ -3,8 +3,12 @@ import React from 'react';
 export const MainPage = () => {
 
     return (
-    <div>
-        <p>MAin paaaaaaaaaageg</p>
+        <div>
+            <h1>Welcome in PhotoLand!</h1>
+            <p>Main paaaaaaaaaageg</p>
     </div>
+        
+
+    
     )
 }
