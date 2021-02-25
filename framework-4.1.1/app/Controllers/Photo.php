@@ -74,6 +74,8 @@ class Photo extends BaseController
         return $this->db_connection->affectedRows() === 1;
     }
 
+    //TODO increase counter
+
     public function update($photo_id)
     {
         $counterByPhoto = $this->getCounterByPhotoID($photo_id);
@@ -104,4 +106,6 @@ class Photo extends BaseController
             return -1;
         }
     }
+
+    //todo update/edit photo data
 }
