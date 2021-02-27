@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PhotoModel extends Model
+class Photo extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'photos';
