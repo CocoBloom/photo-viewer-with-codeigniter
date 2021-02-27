@@ -66,8 +66,17 @@ class PhotoController extends ResourceController
         } catch (\Exception $e) {
             return $this->failNotFound($e->getMessage());
         }
-
-
     }
 
+    public function show($id = null)
+    {
+        $model = new Photo();
+        $photo = $model->getWhere(['id' => $id])->getResult();
+        if($photo){
+            return $this->respond($photo);
+        }else{
+            return $this->failNotFound('No Data Found with id '.$id);
+        }
+
+    }
 }
