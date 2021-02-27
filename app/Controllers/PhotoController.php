@@ -4,11 +4,9 @@ namespace App\Controllers;
 use App\Models\Photo;
 use App\Models\ViewCounterModel;
 use CodeIgniter\RESTful\ResourceController;
-use CodeIgniter\API\ResponseTrait;
 
 class PhotoController extends ResourceController
 {
-    use ResponseTrait;
     public function index()
     {
         $model = new Photo();
