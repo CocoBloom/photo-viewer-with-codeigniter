@@ -2,14 +2,18 @@
 
 namespace App\Controllers;
 use App\Models\Photo;
+use App\Models\ViewCounterModel;
 use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\API\ResponseTrait;
 
 class PhotoController extends ResourceController
 {
+    use ResponseTrait;
     public function index()
     {
         $model = new Photo();
-        $photos = $model->join('view_counters', 'photos.id = view_counters.photo_id')
+        $photos = $model->select(['id', 'caption', 'photo_credit', 'view_counter'])
+            ->join('view_counters', 'photos.id = view_counters.photo_id')
                         ->findAll();
         return $this->respond($photos);
     }
@@ -31,6 +35,41 @@ class PhotoController extends ResourceController
         }else{
             return $this->failNotFound('No Photo Found with this id: '.$id);
         }
+    }
+
+    public function create()
+    {
+        $model = new Photo();
+        $counterModel = new ViewCounterModel();
+        $newCapt = $this->request->getVar('caption');
+        $newCredit = $this->request->getVar('photo_credit');
+        $data = [
+            'caption' => $newCapt,
+            'photo_credit' => $newCredit
+        ];
+
+        try{
+            $model->protect(false)
+                  ->insert($data);
+            $insertedID = $model->getInsertID();
+
+            $counterModel->protect(false)
+                         ->insert(['photo_id' => $insertedID]);
+
+            $response = [
+                'status'   => 201,
+                'error'    => null,
+                'messages' => [
+                    'success' => 'New Photo is saved.'
+                ],
+                'newPhotoID' => $insertedID
+            ];
+            return $this->respondCreated($response);
+        } catch (\Exception $e) {
+            return $this->failNotFound($e->getMessage());
+        }
+
+
     }
 
 }
