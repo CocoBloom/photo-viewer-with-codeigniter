@@ -4,6 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+/**
+ * Class PhotoModel - Model class to maintain MVC pattern in the application.
+ * @package App\Models
+ */
 class PhotoModel extends Model
 {
 	protected $DBGroup              = 'default';
