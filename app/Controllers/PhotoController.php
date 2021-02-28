@@ -1,24 +1,42 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\Photo;
+use App\Models\PhotoModel;
 use App\Models\ViewCounterModel;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\RESTful\ResourceController;
 
+/**
+ * Class PhotoController
+ * PhotoController controls provides operations with Photos table for displaying or changing data.
+ * @package App\Controllers
+ */
 class PhotoController extends ResourceController
 {
+    /**
+     * Join photos table with view_counters to get view_counter value of each photo.
+     * @return mixed
+     */
     public function index()
     {
-        $model = new Photo();
-        $photos = $model->select(['id', 'caption', 'photo_credit', 'view_counter'])
-            ->join('view_counters', 'photos.id = view_counters.photo_id')
-                        ->findAll();
-        return $this->respond($photos);
+        try {
+            $model = new PhotoModel();
+            $photos = $model->select(['id', 'caption', 'photo_credit', 'view_counter'])
+                ->join('view_counters', 'photos.id = view_counters.photo_id')
+                            ->findAll();
+            return $this->respond($photos);
+        } catch (DatabaseException $e) {
+            return $this->failNotFound($e->getMessage());
+        }
     }
 
+    /**
+     * @param null $id
+     * @return mixed
+     */
     public function delete($id = null)
     {
-        $model = new Photo();
+        $model = new PhotoModel();
         $photoExists = $model->find($id);
         if ($photoExists){
             $model->delete($id);
@@ -26,18 +44,21 @@ class PhotoController extends ResourceController
                 'status'   => 200,
                 'error'    => null,
                 'messages' => [
-                    'success' => 'Photo is deleted'
+                    'success' => 'PhotoModel is deleted'
                 ]
             ];
             return $this->respondDeleted($response);
         }else{
-            return $this->failNotFound('No Photo Found with this id: '.$id);
+            return $this->failNotFound('No PhotoModel Found with this id: '.$id);
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function create()
     {
-        $model = new Photo();
+        $model = new PhotoModel();
         $counterModel = new ViewCounterModel();
         $newCapt = $this->request->getVar('caption');
         $newCredit = $this->request->getVar('photo_credit');
@@ -58,7 +79,7 @@ class PhotoController extends ResourceController
                 'status'   => 201,
                 'error'    => null,
                 'messages' => [
-                    'success' => 'New Photo is saved.'
+                    'success' => 'New PhotoModel is saved.'
                 ],
                 'newPhotoID' => $insertedID
             ];
@@ -68,9 +89,13 @@ class PhotoController extends ResourceController
         }
     }
 
+    /**
+     * @param null $id
+     * @return mixed
+     */
     public function show($id = null)
     {
-        $model = new Photo();
+        $model = new PhotoModel();
         $photo = $model->getWhere(['id' => $id])->getResult();
         if($photo){
             return $this->respond($photo);
@@ -79,10 +104,13 @@ class PhotoController extends ResourceController
         }
     }
 
+    /**
+     * @param null $id
+     * @return mixed
+     */
     public function update($id = null)
     {
-        error_log($id);
-        $model = new Photo();
+        $model = new PhotoModel();
         $newCaption = $this->request->getVar('caption');
         $newPhoto_credit = $this->request->getVar('photo_credit');
         $newData = [
@@ -98,12 +126,11 @@ class PhotoController extends ResourceController
                 'status'   => 201,
                 'error'    => null,
                 'messages' => [
-                    'success' => 'Photo is updated.'
+                    'success' => 'PhotoModel is updated.'
                 ],
                 'newPhotoID' => $id,
                 'view_counter' => $view_counter
             ];
-            error_log("success");
             return $this->respondCreated($response);
         } catch (\Exception $e) {
             return $this->failNotFound($e->getMessage());
