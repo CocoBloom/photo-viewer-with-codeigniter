@@ -77,6 +77,36 @@ class PhotoController extends ResourceController
         }else{
             return $this->failNotFound('No Data Found with id '.$id);
         }
+    }
 
+    public function update($id = null)
+    {
+        error_log($id);
+        $model = new Photo();
+        $newCaption = $this->request->getVar('caption');
+        $newPhoto_credit = $this->request->getVar('photo_credit');
+        $newData = [
+            'caption' => $newCaption,
+            'photo_credit' => $newPhoto_credit
+        ];
+
+        try{
+            $model->protect(false)
+                ->update($id,$newData);
+            $view_counter = ViewCounterController::getCounterByPhotoID($id);
+            $response = [
+                'status'   => 201,
+                'error'    => null,
+                'messages' => [
+                    'success' => 'Photo is updated.'
+                ],
+                'newPhotoID' => $id,
+                'view_counter' => $view_counter
+            ];
+            error_log("success");
+            return $this->respondCreated($response);
+        } catch (\Exception $e) {
+            return $this->failNotFound($e->getMessage());
+        }
     }
 }
