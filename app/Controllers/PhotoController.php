@@ -22,7 +22,7 @@ class PhotoController extends ResourceController
         try {
             $model = new PhotoModel();
             $photos = $model->select(['id', 'caption', 'photo_credit', 'view_counter'])
-                ->join('view_counters', 'photos.id = view_counters.photo_id')
+                            ->join('view_counters', 'photos.id = view_counters.photo_id')
                             ->findAll();
             return $this->respond($photos);
         } catch (DatabaseException $e) {
@@ -31,29 +31,35 @@ class PhotoController extends ResourceController
     }
 
     /**
+     * Delete method for delete a row from table.
      * @param null $id
      * @return mixed
      */
     public function delete($id = null)
     {
-        $model = new PhotoModel();
-        $photoExists = $model->find($id);
-        if ($photoExists){
-            $model->delete($id);
-            $response = [
-                'status'   => 200,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'PhotoModel is deleted'
-                ]
-            ];
-            return $this->respondDeleted($response);
-        }else{
-            return $this->failNotFound('No PhotoModel Found with this id: '.$id);
+        try {
+            $model = new PhotoModel();
+            $photoExists = $model->find($id);
+            if ($photoExists) {
+                $model->delete($id);
+                $response = [
+                    'status' => 200,
+                    'error' => null,
+                    'messages' => [
+                        'success' => 'PhotoModel is deleted'
+                    ]
+                ];
+                return $this->respondDeleted($response);
+            } else {
+                return $this->failNotFound('No PhotoModel Found with this id: ' . $id);
+            }
+        } catch (\Exception $e) {
+            return $this->fail($e->getMessage());
         }
     }
 
     /**
+     * Add a new Photo into photos table and a new ViewCounter row with the id of previously created Photo.
      * @return mixed
      */
     public function create()
@@ -90,6 +96,7 @@ class PhotoController extends ResourceController
     }
 
     /**
+     * Implement show method to get a Photo from photos table by ID.
      * @param null $id
      * @return mixed
      */
@@ -105,6 +112,7 @@ class PhotoController extends ResourceController
     }
 
     /**
+     * Update a specified Photo's data.
      * @param null $id
      * @return mixed
      */
