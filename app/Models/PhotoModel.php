@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Photo extends Model
+class PhotoModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'photos';
@@ -14,7 +14,7 @@ class Photo extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = [];
+	protected $allowedFields        = ['caption', 'photo_credit'];
 
 	// Dates
 	protected $useTimestamps        = false;

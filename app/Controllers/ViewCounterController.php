@@ -5,8 +5,18 @@ namespace App\Controllers;
 use App\Models\ViewCounterModel;
 use CodeIgniter\RESTful\ResourceController;
 
+/**
+ * Class ViewCounterController
+ * Provides operations with view_counters table.
+ * @package App\Controllers
+ */
 class ViewCounterController extends ResourceController
 {
+    /**
+     * Update a view_counter value by photo_id.
+     * @param null $photo_id
+     * @return mixed
+     */
     public function update($photo_id = null)
     {
         try {
@@ -33,10 +43,20 @@ class ViewCounterController extends ResourceController
         }
     }
 
+    /**
+     * Get view_counter value by photo_id.
+     * @param $photo_id
+     * @return int
+     */
     public static function getCounterByPhotoID($photo_id)
     {
-        $model = new ViewCounterModel();
-        $view_counterByPhotoID = $model->getWhere(['photo_id' => $photo_id])->getResult();
-        return intval($view_counterByPhotoID[0]->view_counter);
+        try {
+            $model = new ViewCounterModel();
+            $view_counterByPhotoID = $model->getWhere(['photo_id' => $photo_id])->getResult();
+            return intval($view_counterByPhotoID[0]->view_counter);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
     }
 }

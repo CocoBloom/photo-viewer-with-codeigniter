@@ -1,0 +1,38 @@
+[
+    {
+       "caption"      : "Sunflowers - 1888",
+       "photo_credit" : "Vincent van Gogh",
+       "view_counter" : 34
+    }, {
+       "caption"      : "Pillars of Creation - 1995",
+       "photo_credit" : "Nasa",
+       "view_counter" : 23
+    }, {
+       "caption"      : "Migrant Mother - 1936",
+       "photo_credit" : "Dorothea Lange",
+       "view_counter" : 11
+    }, {
+       "caption"      : "Lennon & Yoko - 1980",
+       "photo_credit" : "Annie Leibovitz",
+       "view_counter" : 59
+    }, {
+       "caption"      : "Footprint On The Moon - 1969",
+       "photo_credit" : "Buzz Aldrin",
+       "view_counter" : 113
+    }, {
+       "caption"      : "Milk Drop Coronet - 1957",
+       "photo_credit" : "Harold Edgerton",
+       "view_counter" : 7
+    }, {
+       "caption"      : "The Loch Ness Monster - 1934",
+       "photo_credit" : "Ian Wetherell"
+    }, {
+       "caption"      : "Dalí Atomicus - 1948",
+       "photo_credit" : "Philippe Halsman",
+       "view_counter" : 62
+    }, {
+       "caption"      : "Marina Ginesta at the top of Hotel Colon in Barcelona - 1936",
+       "photo_credit" : "Juan Guzman"
+    }
+
+]

@@ -14,7 +14,7 @@ class ViewCounterModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = [];
+	protected $allowedFields        = ['photo_id', 'view_counter'];
 
 	// Dates
 	protected $useTimestamps        = false;
