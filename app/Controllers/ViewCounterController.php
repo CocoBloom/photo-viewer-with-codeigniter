@@ -11,7 +11,7 @@ class ViewCounterController extends ResourceController
     {
         try {
             $model = new ViewCounterModel();
-            $counterByPhotoID = $this->getCounterByPhotoID($photo_id);
+            $counterByPhotoID = self::getCounterByPhotoID($photo_id);
             $newCounter = [
                 'photo_id' => $photo_id,
                 'view_counter' => $counterByPhotoID + 1
@@ -33,11 +33,10 @@ class ViewCounterController extends ResourceController
         }
     }
 
-    protected function getCounterByPhotoID($photo_id)
+    public static function getCounterByPhotoID($photo_id)
     {
         $model = new ViewCounterModel();
         $view_counterByPhotoID = $model->getWhere(['photo_id' => $photo_id])->getResult();
         return intval($view_counterByPhotoID[0]->view_counter);
     }
-
 }
