@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Photos extends Migration
+class Photo extends Migration
 {
     public function up()
     {
@@ -13,10 +13,10 @@ class Photos extends Migration
                 'type' => 'INT',
                 'auto_increment' => true
             ],
-            'caption' => [
+            'photo_credit' => [
                 'type' => 'TEXT'
             ],
-            'photo_credit' => [
+            'caption' => [
                 'type' => 'TEXT'
             ]
         ]);
@@ -28,6 +28,6 @@ class Photos extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('photos', true);
+        $this->forge->dropTable('photos');
     }
 }
