@@ -8,8 +8,8 @@ class ViewCounterModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'view_counters';
-	protected $primaryKey           = 'id';
-	protected $useAutoIncrement     = true;
+	protected $primaryKey           = 'photo_id';
+	protected $useAutoIncrement     = false;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
