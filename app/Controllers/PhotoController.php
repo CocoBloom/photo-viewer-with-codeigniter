@@ -8,7 +8,7 @@ use CodeIgniter\RESTful\ResourceController;
 
 /**
  * Class PhotoController
- * PhotoController controls provides operations with Photos table for displaying or changing data.
+ * PhotoController provides operations with Photos table for displaying or changing data.
  * @package App\Controllers
  */
 class PhotoController extends ResourceController

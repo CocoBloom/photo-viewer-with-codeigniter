@@ -8,7 +8,12 @@ use CodeIgniter\Database\Seeder;
 
 class PhotoSeeder extends Seeder
 {
-	public function run()
+    /**
+     * Use this method to fill tables before the operations.
+     * @return mixed|void
+     * @throws \ReflectionException
+     */
+    public function run()
 	{
 
 	    $photosResource = file_get_contents('../resources/photos.json');
