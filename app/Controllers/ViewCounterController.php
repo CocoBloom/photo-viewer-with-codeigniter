@@ -50,8 +50,13 @@ class ViewCounterController extends ResourceController
      */
     public static function getCounterByPhotoID($photo_id)
     {
-        $model = new ViewCounterModel();
-        $view_counterByPhotoID = $model->getWhere(['photo_id' => $photo_id])->getResult();
-        return intval($view_counterByPhotoID[0]->view_counter);
+        try {
+            $model = new ViewCounterModel();
+            $view_counterByPhotoID = $model->getWhere(['photo_id' => $photo_id])->getResult();
+            return intval($view_counterByPhotoID[0]->view_counter);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
     }
 }
