@@ -33,8 +33,8 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->resource('photo', ['controller' => 'PhotoController']);
-$routes->resource('view-counter', ['controller' => 'ViewCounterController']);
+$routes->resource('photo', ['controller' => 'PhotoController', 'only' => ['index', 'delete', 'create', 'show', 'update']]);
+$routes->resource('view-counter', ['controller' => 'ViewCounterController', 'only' => ['update']]);
 
 
 /*
